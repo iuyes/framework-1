@@ -1,3 +1,0 @@
-<?php
-	
-	class Simple1 {}

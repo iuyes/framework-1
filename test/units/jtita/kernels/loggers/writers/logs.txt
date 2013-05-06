@@ -1,6 +1,0 @@
---------------------------
- subject:Hello world
- category:zgp
- user:Hello world Zheng Guoping message:normal
- time:2013-04-29 22:04:27
-----------------------------

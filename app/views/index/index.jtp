@@ -1,5 +1,0 @@
-<?php
-    $view->helpers('html');
-
-    echo _linkTo('Hello World',array('action' => 'goods'),array(),'admins');
-
