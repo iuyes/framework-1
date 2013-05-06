@@ -1,0 +1,30 @@
+<h3>系统面板</h3>
+<nav>
+    <ul class="nav nav-list">
+        <li <?php if ($view->query('controller') == 'index') { echo 'class="active"'; } ?>><?php echo _linkTo('概述',array('controller' => 'index','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'access') { echo 'class="active"'; } ?>><?php echo _linkTo('流量监控',array('controller' => 'access','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'users') { echo 'class="active"'; } ?>><?php echo _linkTo('管理员',array('controller' => 'users','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'apps') { echo 'class="active"'; } ?>><?php echo _linkTo('应用',array('controller' => 'apps','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'logs') { echo 'class="active"'; } ?>><?php echo _linkTo('日志',array('controller' => 'logs','action' => 'index')); ?></li>
+        <li class="divider"></li>
+    </ul>
+</nav>
+<nav>
+    <h4>工具</h4>
+    <ul class="nav nav-list">
+        <li <?php if ($view->query('controller') == 'sql_tools') { echo 'class="active"'; } ?>><?php echo _linkTo('SQL工具',array('controller' => 'sql_tools','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'cache_tools') { echo 'class="active"'; } ?>><?php echo _linkTo('缓存工具',array('controller' => 'cache_tools','action' => 'index')); ?></li>
+        <li class="divider"></li>
+    </ul>
+</nav>
+<nav>
+    <h4>配置</h4>
+    <ul class="nav nav-list">
+        <li <?php if ($view->query('controller') == 'settings') { echo 'class="active"'; } ?>><?php echo _linkTo('全局配置',array('controller' => 'settings','action' => 'index')); ?></li>
+        <li class="divider"></li>
+        <li <?php if ($view->query('controller') == 'user_groups') { echo 'class="active"'; } ?>><?php echo _linkTo('管理组',array('controller' => 'user_groups','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'themes') { echo 'class="active"'; } ?>><?php echo _linkTo('主题',array('controller' => 'themes','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'roles') { echo 'class="active"'; } ?>><?php echo _linkTo('角色',array('controller' => 'roles','action' => 'index')); ?></li>
+        <li <?php if ($view->query('controller') == 'navs') { echo 'class="active"'; } ?>><?php echo _linkTo('导航',array('controller' => 'navs','action' => 'index')); ?></li>
+    </ul>
+</nav>

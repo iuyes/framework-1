@@ -1,0 +1,178 @@
+<?php $view->layout ('sidebar'); ?>
+<?php
+    $view->contentFor ('title', 'new user');
+    $view->contentFor ('sidebar', function ($view) {
+        $view->elementRender ('sidebar');
+    }); ?>
+<?php $view->contentFor ('head', function ($view) { ?>
+<script type="text/javascript" src="/themes/plugins/jquery.validate/jquery.validate.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            // 录入框错误提示。
+            $("#xbl_user_form input").tooltip({trigger:'hover|focus|click'});
+            $("#xbl_user_form").submit(function () {
+                $('#roles').find('option').attr('selected', true);
+            });
+            $("#xbl_user_form").validate({
+                rules:{
+                    'XblUser[name]':"required",
+                    'XblUser[email]':'email',
+                    'XblUser[password]':'required'
+                },
+                messages:{
+                    'XblUser[name]':"管理员姓名不能为空，且必须大于6个字符",
+                    'XblUser[email]':"管理员邮箱不能为空.",
+                    'XblUser[password]':'管理员密码不能为空.'
+                },
+                errorClass:"input-error",
+                errorPlacement:function (error, element) {
+                    $(element).attr('data-original-title', $(error).html());
+                },
+                success:function (label, element) {
+                    $(element).attr('data-original-title', '');
+                }
+            });
+
+            function changeRoles() {
+                $("#roleCount").html("已分配" + $('#roles option').size() + "个角色");
+            }
+
+            $("#allRoles").dblclick(function (e) {
+                $("#roles").append($(this).find('option:selected'));
+                changeRoles();
+            });
+
+            $("#roles").dblclick(function (e) {
+                $("#allRoles").append($(this).find('option:selected'));
+                changeRoles();
+            });
+
+            $("#addAllRoles").click(function () {
+                $("#roles").append($("#allRoles").find('option'));
+                changeRoles();
+            });
+            $("#addRoles").click(function () {
+                $("#roles").append($("#allRoles").find('option:selected'));
+                changeRoles();
+            });
+            $("#removeRoles").click(function () {
+                $("#allRoles").append($("#roles").find('option:selected'));
+                changeRoles();
+            });
+            $("#removeAllRoles").click(function () {
+                $("#allRoles").append($("#roles").find('option'));
+                changeRoles();
+            });
+        });
+    })(jQuery);
+</script>
+<?php }); ?>
+<?php $view->contentFor ('archive', function ($view) { ?>
+<header class="page-header">
+    <h1>
+        <?php echo _linkTo ('管理员', array('action' => 'index')); ?>
+        &nbsp;&gt;&nbsp;新增
+    </h1>
+</header>
+<div class="page-work">
+    <?php _formBuilder ('XblUser', $view['user'], function ($f) use ($view) { ?>
+    <?php # echo $view->textMessage (); ?>
+    <div class="row-fluid">
+        <fieldset class="span10">
+            <legend>基本信息</legend>
+            <div class="control-group">
+                <?php echo $f->label ('name', array('title' => '用户名：', 'class' => 'control-label')); ?>
+                <div class="controls">
+                    <?php echo $f->text ('name', array('class' => 'input-large', 'autofocus' => 'true')); ?>
+                    <span class="help-inline">用户名是用户的凭证，必填且不能重复。</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <?php echo $f->label ('group_id', array('title' => '管理组：', 'class' => 'control-label')); ?>
+
+                <div class="controls">
+                    <?php echo $f->select ('group_id', array('options' => $view['groups']->klist ('id,name'),
+                    'class' => 'select input-large')); ?>
+                    <span class="help-inline">选择管理组，必选。</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <?php echo $f->label ('email', array('title' => '邮箱：', 'class' => 'control-label')); ?>
+
+                <div class="controls">
+                    <div class="input-append">
+                        <?php echo $f->email ('email', array('class' => 'input-large')); ?>
+                        <span class="add-on">@</span>
+                    </div>
+                    <span class="help-inline">登陆时允许使用邮箱地址，必填且不能重复。</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <?php echo $f->label ('password', array('title' => '安全密码：', 'class' => 'control-label')); ?>
+
+                <div class="controls">
+                    <div class="input-append">
+                        <?php echo $f->password ('password', array('class' => 'input-large', 'value' => '')); ?>
+                        <span class="add-on"><i class="icon-lock"></i></span>
+                    </div>
+                    <span class="help-inline">登录时需要录入安全密码，必填写且长度大于6位。</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <?php echo $f->label ('repeat_password', array('title' => '重复密码：', 'class' => 'control-label')); ?>
+                <div class="controls">
+                    <div class="input-append">
+                        <?php echo $f->password ('repeat_password', array('class' => 'input-large', 'value' => '')); ?>
+                        <span class="add-on"><i class="icon-repeat"></i></span>
+                    </div>
+                    <span class="help-inline">请重复安全密码。</span>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="row-fluid">
+        <fieldset class="span10">
+            <legend>用户角色
+                <span id="roleCount" class="label label-info">已分配0个角色</span>
+            </legend>
+            <div class="span3 offset1">
+                <select id="allRoles" class="span12" size="15">
+                    <?php echo $f->options ($view['roles']->klist ('id,name')); ?>
+                </select>
+            </div>
+            <div class="span1"><br/><br/>
+                <button type="button" id="addAllRoles" class="btn btn-block">&gt;&gt;</button>
+                <button type="button" id="addRoles" class="btn btn-block">&gt;</button>
+                <br/>
+                <button type="button" id="removeRoles" class="btn btn-block">&lt;</button>
+                <button type="button" id="removeAllRoles" class="btn btn-block">&lt;&lt;</button>
+            </div>
+            <div class="span3">
+                <select id="roles" name="roles[]" class="span12" size="15" multiple></select>
+            </div>
+        </fieldset>
+    </div>
+    <div class="row-fluid">
+        <fieldset class="span10">
+            <legend>访问系统</legend>
+            <label class="radio">
+                <?php echo $f->radio ('allow', array('value' => 1, 'checked' => 'true')); ?>
+                启用账户，允许通过账户访问系统及其相关功能。
+            </label>
+            <label class="radio">
+                <?php echo $f->radio ('allow', 0); ?>
+                禁用账户，账户将不能访问系统的及相关功能。
+            </label>
+        </fieldset>
+    </div>
+    <div class="form-actions ">
+        <button class="btn btn-primary">创建用户</button>
+        <?php echo _linkTo ('返回', array('action' => 'index'), array('class' => 'btn')); ?>
+    </div>
+    <?php
+}, array('class' => 'form-horizontal page-archive', 'action' => _url (array('fullPath' => true)))); ?>
+
+</div>
+<?php }); ?>

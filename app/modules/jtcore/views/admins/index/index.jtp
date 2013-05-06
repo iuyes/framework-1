@@ -1,0 +1,82 @@
+<?php $view->layout ('sidebar'); ?>
+<?php
+    $view->contentFor ('title', 'overview');
+    $view->contentFor ('sidebar', function ($view) {
+        $view->elementRender ('sidebar');
+    }); ?>
+<?php $view->contentFor ('archive', function ($view) { ?>
+<header class="page-header">
+    <h1><?php echo _cfg ('jtcore.name'); ?>
+        <?php echo _linkTo ('修改', array('controller' => 'settings',
+            'action' => 'index'), array('class' => 'badge badge-info')); ?>
+    </h1>
+
+    <p class="help-block">
+        <?php echo _cfg ('jtcore.description'); ?>
+    </p>
+</header>
+<div class="row-fluid">
+    <div class="span8">
+        <h3>流量统计
+            <?php echo _linkTo ('更多>>', array('action' => 'index',
+                'controller' => 'access'), array('class' => 'pull-right')); ?>
+        </h3>
+
+        <div class="well height200">
+
+        </div>
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#archive" data-toggle="tab">文章</a></li>
+                <li class="pull-right"><a href="#" class="badge badge-info">订阅</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="archive" class="tab-pane active">
+                    <ul>
+                        <li><a href="#">【推荐文章】2013新祝词，蛇年吉祥</a>&nbsp;
+                            <small>2012-12-23</small>
+                        </li>
+                        <li><a href="#">【精彩博文】xbutu中的前端控制器设计</a>&nbsp;
+                            <small>2012-12-23</small>
+                        <li><a href="#">【推荐文章】2013新祝词，蛇年吉祥</a>&nbsp;
+                            <small>2012-12-23</small>
+                        </li>
+                        <li><a href="#">【最新发布】热烈祝贺xbutu 2.0 推出成功</a>&nbsp;
+                            <small>2012-12-23</small>
+                        </li>
+                        <li><a href="#">【最新发布】绿色后台显示模板</a>&nbsp;
+                            <small>2012-12-23</small>
+                            >
+                        </li>
+                        <li><a href="#">【最新发布】xbutu 2.0 推出成功</a>&nbsp;
+                            <small>2012-12-23</small>
+                        </li>
+                        <li><a href="#">【最新发布】xbutu lives微博登陆应用</a>&nbsp;
+                            <small>2012-12-23</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="span4">
+        <h3>管理员</h3>
+        <table class="table table-striped table-hover">
+            <tbody>
+                <?php $users = _query ('SELECT id,name,last_login_date FROM xbl_user order by last_login_date desc limit 5'); ?>
+                <?php foreach ($users as $user) { ?>
+            <tr>
+                <td>
+                    <?php echo _linkTo ($user['name'], array('action' => 'edit',
+                    'controller' => 'users'), array('title' => '最近访问' . _datetime ($user['last_login_date']))); ?>
+                <td>
+                    <small><?php echo _lasttime ($user['last_login_date']); ?></small>
+                </td>
+            </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php }); ?>

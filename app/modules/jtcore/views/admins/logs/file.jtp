@@ -1,0 +1,32 @@
+<?php
+    $view->layout ('sidebar');
+    $view->contentFor ('title', 'log file');
+    $view->contentFor ('sidebar', function ($view) {
+        $view->elementRender ('sidebar');
+    });
+?>
+<?php $view->contentFor ('archive', function ($view) { ?>
+<div class="page-header">
+    <h1>
+        <?php echo _linkTo ('日志', array('action' => 'index')); ?>
+        &gt;
+        <?php echo $view['fileName']; ?>
+        <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $view['fileName']; ?>&nbsp;<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <?php foreach ($view['logFiles'] as $fileName) { ?>
+                <li>
+                    <?php echo _linkTo ($fileName, array('action' => 'file', 'fileName' => $fileName)); ?>
+                </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </h1>
+</div>
+    <hr/>
+<div class="container-fluid page-archive">
+    <textarea class="span12" style="height:550px;">
+        <?php echo $view['fileContent']; ?>
+    </textarea>
+</div>
+<?php }); ?>

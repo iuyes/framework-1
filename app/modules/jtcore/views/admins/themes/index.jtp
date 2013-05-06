@@ -1,0 +1,169 @@
+<?php $view->layout('sidebar'); ?>
+<?php $view->contentFor('title', 'SQL tools'); ?>
+<?php $view->contentFor('sidebar', function ($view) {
+    $view->elementRender('sidebar');
+}); ?>
+
+<?php $view->contentFor('archive', function ($view) { ?>
+<header class="page-header">
+    <h1>主题</h1>
+</header>
+<div class="row-fluid page-archive">
+    <div class="span8">
+        <div>
+            <img src="images/game.png" class="pull-left margin10">
+            <h5><a href="#">游戏主题</a></h5>
+
+            <p class="help-block">
+                游戏主题以暗黑游戏中提供的内容为素材，支持文章、项目、专题等部分的设计。<br/>
+                <small>
+                    Version:1.0<br/>
+                    Author: Chen
+                </small>
+            </p>
+            <p>
+                <a href="#">编辑</a>
+                &nbsp;|&nbsp;
+                <a href="#">配置</a>
+            </p>
+        </div>
+        <div class="clearfix height100"></div>
+        <h3>已有主题</h3>
+        <ul class="unstyled margin0 padding0">
+            <li class="pull-left  margin5 padding10 bordered width130 hover">
+                <p><img src="images/gplus.png" class=" img-rounded "/></p>
+
+                <h5><a href="#">Google +主题</a></h5>
+                <small class="help-block">
+                    Google + 主题模仿google一贯的简洁，平实风格，是一款非常不错的主题内容。
+                </small>
+
+                <p class="actions">
+                    <a href="#">启用</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">编辑</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">复制</a>
+                </p>
+            </li>
+            <li class="pull-left margin5 padding10 bordered width130 hover">
+                <p>
+                    <img src="images/game.png" class="img-rounded "/>
+                </p>
+                <h5><a href="#">游戏主题</a></h5>
+                <small class="help-block">
+                    游戏主题以暗黑游戏中提供的内容为素材，支持文章、项目、专题等部分的设计。
+                </small>
+
+                <p class="actions">
+                    <a href="#">启用</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">编辑</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">复制</a>
+                </p>
+            </li>
+            <li class="pull-left margin5 padding10 bordered width130 hover">
+                <p>
+                    <img src="images/email.png" class=" img-rounded "/>
+                </p>
+
+                <h5><a href="#">Google Mail主题</a></h5>
+                <small class="help-block">
+                    模仿google mail的主题信息。
+                </small>
+
+                <p class="actions">
+                    <a href="#">启用</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">编辑</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">复制</a>
+                </p>
+            </li>
+
+            <li class="pull-left  margin5 padding10 bordered width130 hover">
+                <p>
+                    <img src="images/market.png" class=" img-rounded "/>
+                </p>
+                <h5><a href="#">商城主题</a></h5>
+                <small class="help-block">
+                    Google + 主题模仿google一贯的简洁，平实风格，是一款非常不错的主题内容。
+                </small>
+                <p class="actions">
+                    <a href="#">启用</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">编辑</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">复制</a>
+                </p>
+            </li>
+            <li class="pull-left margin5 padding10 bordered width130 hover">
+                <p>
+                    <img src="images/email.png" class=" img-rounded "/>
+                </p>
+
+                <h5><a href="#">Google Mail主题</a></h5>
+                <small class="help-block">
+                    模仿google mail的主题信息。
+                </small>
+
+                <p class="actions">
+                    <a href="#">启用</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">编辑</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">复制</a>
+                </p>
+            </li>
+            <li class="pull-left margin5 padding10 bordered width130 hover">
+                <p>
+                    <img src="images/game.png" class="img-rounded "/>
+                </p>
+                <h5><a href="#">游戏主题</a></h5>
+                <small class="help-block">
+                    游戏主题以暗黑游戏中提供的内容为素材，支持文章、项目、专题等部分的设计。
+                </small>
+                <p class="actions">
+                    <a href="#">启用</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">编辑</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">复制</a>
+                </p>
+            </li>
+
+        </ul>
+
+    </div>
+    <div class="span4">
+        <form class="well form">
+            <fieldset>
+                <legend>安装新主题</legend>
+                <label>远程安装：</label>
+                <input type="text" class="span11"/>
+                <label>本地上传：</label>
+                <input type="file"/>
+                <hr/>
+                <button class="btn btn-primary">安装</button>
+            </fieldset>
+        </form>
+        <h3>推荐主题&nbsp;
+            <div class="pull-right">
+                <a href="#" class="badge badge-info ">推荐</a>
+                <a href="#" class="badge badge-info ">最新</a>
+                <a href="#" class="badge badge-info">最热</a>
+            </div>
+        </h3>
+        <ul class="unstyled">
+            <li><img src="images/game.png" class="img-rounded width60"/>&nbsp;
+                51游戏中心
+            </li>
+            <li><img src="images/email.png" class=" img-rounded width60"/>&nbsp;Google Mail</li>
+            <li><img src="images/gplus.png" class=" img-rounded width60"/>&nbsp;Google +</li>
+            <li><img src="images/market.png" class=" img-rounded width60"/>&nbsp;51游戏中心</li>
+        </ul>
+        <a href="#">更多主题>></a></h5>
+    </div>
+</div>
+<?php }); ?>
