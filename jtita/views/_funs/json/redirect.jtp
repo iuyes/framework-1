@@ -1,0 +1,5 @@
+<?php $view->contentType ('text/json;charset=utf-8'); ?>
+<?php
+    $msg = $view->message ();
+    echo json_encode ($msg);
+?>

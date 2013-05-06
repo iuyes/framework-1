@@ -1,0 +1,174 @@
+<?php $view->layout ('sidebar'); ?>
+<?php
+    $view->helpers (array('paginate', 'bootstrap'));
+    $view->contentFor ('title', 'system users');
+?>
+<?php $view->contentFor ('head', function () { ?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#delMore").jtcPost({
+            fields:function () {
+                return $.checkFields($("#users tbody :checkbox[checked]"), 'id', {method:'DELETE'});
+            },
+            fieldsNotify:function () {
+                $.jtcNotify({message:'请选择需要删除的管理员.', sign:'fail'});
+            }
+        });
+
+        $('#allowMore').jtcPost({
+            fields:function () {
+                return $.checkFields($("#users tbody :checkbox[checked]"), 'id', {method:'PUT'});
+            },
+            fieldsNotify:function () {
+                $.jtcNotify({message:'请选择需要开启的管理员.', sign:'fail'});
+            }
+        });
+
+        $('#denyMore').jtcPost({
+            fields:function () {
+                return $.checkFields($("#users tbody :checkbox[checked]"), 'id', {method:'PUT'});
+            },
+            fieldsNotify:function () {
+                $.jtcNotify({message:'请选择需要禁用的管理员.', sign:'fail'});
+            }
+        });
+    });
+</script>
+<?php }); ?>
+
+<?php $view->contentFor ('sidebar', function ($view) {
+    $view->elementRender ('sidebar');
+}); ?>
+
+<?php $view->contentFor ('archive', function ($view) { ?>
+<header class="page-header">
+    <h1>管理员
+        <?php if ($view->query ('group') || $view->query ('name')) { ?>
+            <?php echo _linkTo ('查看全部&gt;&gt;', array('action' => 'index'), array('class' => 'badge badge-info')); ?>
+            <?php } ?>
+    </h1>
+</header>
+
+<form class="page-actions  form-search btn-toolbar" method="POST" action="<?php echo _url ('search'); ?>">
+    <div class="btn-group input-append">
+        <input type="text" name="name" class="search-query" value="<?php echo $view->query ('name'); ?>"/>
+        <input type="hidden" name="group" value="<?php echo $view->query ('group'); ?>"/>
+        <button class="btn"><i class="icon-search"></i></button>
+    </div>
+    <div class="btn-group">
+        <?php  echo _dropFilter ($view['groups']->klist ('id,name'), 'group', '管理组', array(), array('autoTitle' => true,
+        'class' => 'btn dropdown-toggle')); ?>
+    </div>
+    <div id="moreAction" class="btn-group" style="display: none;">
+        <?php echo _linkTo ('<i class="icon icon-ok-circle"></i>', array('action' => 'allow',
+        '_fullPath' => true), array('id' => 'allowMore', 'title' => '开启账户访问。', 'data-confirm' => '请确认是否开启选定管理员的访问？',
+        'data-toggle' => 'xbl-post', 'class' => 'btn')); ?>
+        <?php echo _linkTo ('<i class="icon icon-ban-circle"></i>', array('action' => 'deny',
+        '_fullPath' => true), array('id' => 'denyMore', 'title' => '禁止账户访问。', 'data-confirm' => '请确认是否禁止选定管理员的访问？',
+        'data-toggle' => 'xbl-post', 'class' => 'btn')); ?>
+        <?php echo _linkTo ('<i class="icon icon-remove"></i>', array('action' => 'delete',
+        '_fullPath' => true), array('id' => 'delMore', 'title' => '删除账户。', 'data-confirm' => '请确认是否删除选定的管理员？',
+        'data-toggle' => 'xbl-post', 'class' => 'btn')); ?>
+    </div>
+    <div class="btn-group">
+        <?php echo _linkTo ('<i class="icon icon-plus"></i>', array('action' => 'new'), array('class' => 'btn')); ?>
+    </div>
+
+    <div class="btn-group pull-right">
+        <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">排序 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li>
+                <?php echo _paginateSortLink ($view['users'], '用户名', 'XblUser.name'); ?>
+            </li>
+            <li>
+                <?php echo _paginateSortLink ($view['users'], '管理组', 'XblUser.group_id'); ?>
+            </li>
+            <li>
+                <?php echo _paginateSortLink ($view['users'], '最后访问时间', 'XblUser.last_login_date'); ?>
+            </li>
+        </ul>
+    </div>
+</form>
+<?php echo $view->textMessage (); ?>
+<div class="page-archive">
+    <?php $rows = $view['users']->joins ('group')->fields ('XblUser.id,XblUser.name,XblUser.allow,XblUser.email,Group.id as gid,Group.name as group_name,XblUser.name,XblUser.created,XblUser.login_count,XblUser.last_login_date')->rows (); ?>
+    <?php if (empty($rows)) { ?>
+    <div class="alert alert-info">
+        <h3>未找到管理员</h3>
+
+        <p>
+            根据查询条件未找到任何管理员信息，请重新设置查询条件或：
+        </p>
+        <ul>
+            <li>
+                <?php echo _linkTo ('查看全部', array('action' => 'index')); ?>
+            </li>
+            <li>
+                <?php echo _linkTo ('增加管理员', array('action' => 'new')); ?>
+            </li>
+        </ul>
+    </div>
+    <?php
+}
+else {
+    ?>
+    <table id="users" class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th class="width20">
+                <label>
+                    <input type="checkbox" data-toggle="jtc-chkall" data-target="#users tbody" data-notify="true"
+                           data-check="#moreAction"/>
+                </label>
+            </th>
+            <th>用户名</th>
+            <th class="width200">邮件</th>
+            <th class="width100 text-center">管理组</th>
+            <th class="width80 text-right">创建时间</th>
+            <th class="width40">选项</th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($rows as $user) { ?>
+        <tr>
+            <td>
+                <label>
+                    <input type="checkbox" value="<?php echo $user['id']; ?>"/>
+                </label>
+            </td>
+            <td>
+                <?php echo _linkTo ($user['name'], array('action' => 'edit', 'id' => $user['id'])); ?>&nbsp;
+                <?php if ($user['allow'] == XblUser::ACCESS_DENY) { ?>
+                <small class="label label-important">禁止</small>
+                <?php } ?>
+                <small class="help-inline"><?php echo _lasttime ($user['last_login_date']); ?>
+                    访问，共<?php echo $user['login_count']; ?>次
+                </small>
+                <?php echo _linkTo ('<i class="icon icon-edit"></i>', array('action' => 'edit',
+                'id' => $user['id'])); ?>
+            </td>
+            <td>
+                <?php echo _mailTo ($user['email'], array('title' => '联系管理员')); ?>
+            </td>
+            <td class="text-center"><?php echo _linkTo ($user['group_name'], array('group' => $user['gid'])); ?></td>
+            <td class="text-right">
+                <?php echo _date ($user['created']); ?>
+            </td>
+
+            <td class="text-center">
+                <?php echo _linkTo ('<i class="icon icon-remove"></i>', array('action' => 'delete','fullUrl' => true), array('data-toggle' => 'jtc-post',
+                'data-fields' => _jsobj (array('method' => 'DELETE', 'id' => $user['id'])),
+                'data-confirm' => '请确认是否删除管理员"' . $user['name'] . '"?')); ?>
+            </td>
+        </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <?php echo  _paginateNumbers ($view['users']); ?>
+    </div>
+    <?php } ?>
+
+</div>
+<?php }); ?>

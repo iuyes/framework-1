@@ -1,0 +1,9 @@
+<?php $view->layout ('sidebar'); ?>
+<?php $view->contentFor ('title', 'account profile'); ?>
+<?php $view->contentFor ('sidebar', function ($view) {
+    $view->elementRender ('account_sidebar');
+}); ?>
+<?php $view->contentFor ('work', function ($view) { ?>
+<h1>账户资料：郑国平</h1>
+
+<?php }); ?>

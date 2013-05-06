@@ -1,0 +1,17 @@
+<?php $view->layoutFile ('sign'); ?>
+<?php $view->contentFor ('work', function ($view) { ?>
+<?php echo _formBuilder ('XblUser', $view['user'], function ($f) { ?>
+    <h2 class="form-signin-heading">登陆 Xbutu lives&nbsp;<span class="badge badge-info pull-right">0.9 alpha</span></h2>
+    <label>
+        <?php echo $f->text ('name', array('class' => 'input-block-level', 'placeholder' => '用户名/电子邮箱')); ?>
+    </label>
+    <label>
+        <?php echo $f->password ('password', array('class' => 'input-block-level', 'placeholder' => '密码')); ?>
+    </label>
+    <label class="checkbox">
+        <?php echo $f->checkbox ('remember-me'); ?>记住登陆
+    </label>
+    <button class="btn  btn-primary" type="submit">登陆</button>
+    <?php echo _linkTo ('忘记密码?', array('action' => 'password'), array('class' => 'inline pull-right')); ?>
+    <?php }, array('class' => 'form-signin')); ?>
+<?php }); ?>

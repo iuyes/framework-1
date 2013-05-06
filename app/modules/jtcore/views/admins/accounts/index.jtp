@@ -1,0 +1,8 @@
+<?php $view->layout ('sidebar'); ?>
+<?php $view->contentFor ('title', 'account overview'); ?>
+<?php $view->contentFor ('sidebar', function ($view) {
+    $view->elementRender ('account_sidebar');
+}); ?>
+<?php $view->contentFor ('work', function ($view) { ?>
+
+<?php }); ?>
